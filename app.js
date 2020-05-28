@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { getHomePage } = require('./routes/index');
-const { getLoginPage, loginUser } = require('./routes/user');
+const { getLoginPage, loginUser, addAdmin } = require('./routes/user');
 
 require('dotenv').config();
 
@@ -24,6 +24,9 @@ app.get('/', getHomePage);
 
 app.get('/login', getLoginPage);
 app.post('/login', loginUser);
+
+
+app.post('/admin/add', addAdmin);
 
 
 app.listen(process.env.PORT, (err) => {
