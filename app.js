@@ -5,11 +5,17 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { getHomePage } = require('./routes/index');
-const { getLoginPage, loginUser, addAdmin } = require('./routes/user');
+const { getLoginPage, loginUser, addAdmin, addDonorDetails } = require('./routes/user');
+
+// const { addUser } = require('./addUser');
 
 require('dotenv').config();
 
 const app = express();
+
+// for(let i = 10; i <= 66; i++) {
+//     addUser('TVE18CS0' + i, 'cse18' + i);
+// }
 
 app.use(cookieParser());
 app.use(cors());
@@ -25,8 +31,10 @@ app.get('/', getHomePage);
 app.get('/login', getLoginPage);
 app.post('/login', loginUser);
 
+app.post('/student/:username/adddetails', addDonorDetails);
 
-app.post('/admin/add', addAdmin);
+
+app.post('/add/admin', addAdmin);
 
 
 app.listen(process.env.PORT, (err) => {

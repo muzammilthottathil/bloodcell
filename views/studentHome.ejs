@@ -1,0 +1,70 @@
+<%- include('partials/header.ejs') -%>
+
+<body>
+    <div>
+        <form action="/student/<%= username %>/adddetails" method="POST">
+            <div>
+                <label>University Register No. : </label>
+                <label><%= username %></label>
+            </div>
+            <div>
+                <label for="name">Name : </label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div>
+                <label for="admissionYear">Year Of Admission : </label>
+                <select name="admissionYear" id="admissionYear" required>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                </select>
+            </div>
+            <div>
+                <label for="dept">Department : </label>
+                <select name="dept" id="dept">
+                    <option value="Computer Sience">Computer Sience</option>
+                    <option value="Electronics and Communication">Electronics and Communication</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Electrical and Electronics">Electrical and Electronics</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Architecture">Architecture</option>
+                </select>
+            </div>
+            <div>
+                <label for="phoneNo">Contact No : </label>
+                <input type="number" name="phoneNo" id="phoneNo" required>
+            </div>
+            <div>
+                <label for="bloodGroup">Blood Group : </label>
+                <select name="bloodGroup" id="bloodGroup">
+                    <option value="A+ve">A+ve</option>
+                    <option value="A-ve">A-ve</option>
+                    <option value="B+ve">B+ve</option>
+                    <option value="B-ve">B-ve</option>
+                    <option value="AB+ve">AB+ve</option>
+                    <option value="AB-ve">AB-ve</option>
+                    <option value="O+ve">O+ve</option>
+                    <option value="O-ve">O-ve</option>
+                </select>
+            </div>
+            <div>
+                <label for="height">Height : </label>
+                <input type="number" name="height" id="" required>cm
+            </div>
+            <div>
+                <label for="weight">Weight : </label>
+                <input type="number" name="weight" id="" required>kg
+            </div>
+            <div>
+                <label for="lastDonation">Date of Last Donation : </label>
+                <input type="date" name="lastDonationd" id="name" required>
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+</body>
