@@ -28,6 +28,12 @@
     <script lang="javascript">
         function checkPhoneNo() {
             let phoneNo = document.getElementById("contactNo").value;
+
+            if(phoneNo.length < 10) {
+                alert('Enter a valid phone no.!!!');
+                return false;
+            }
+            
             for(let i = 0; i <= phoneNo.length; i++) {
                 let currChar = phoneNo.charAt(i);
                 if(isNaN(currChar) && currChar != ' ') {

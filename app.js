@@ -7,7 +7,7 @@ const cors = require('cors');
 const { getHomePage } = require('./routes/index');
 const { getLoginPage, loginUser, addAdmin, getAdminHomePage } = require('./routes/user');
 const { getAddDonorPage, addDonorDetails } = require('./routes/donor');
-const { getAddRequirementPage, addRequirement } = require('./routes/requirement');
+const { getAddRequirementPage, addRequirement, getAssignDonorPage, assignDonor, closeRequirement } = require('./routes/requirement');
 const { getAddHospitalPage, addHospital } = require('./routes/hospital');
 
 require('dotenv').config();
@@ -42,6 +42,11 @@ app.post('/admin/addrequirement', addRequirement);
 
 app.get('/admin/addhospital', getAddHospitalPage);
 app.post('/admin/addhospital', addHospital);
+
+app.get('/admin/:requirementid/assigndonor', getAssignDonorPage);
+app.post('/admin/:requirementid/assigndonor', assignDonor);
+
+app.get('/admin/:requirementid/close', closeRequirement);
 
 app.post('/student/:username/adddetails', addDonorDetails);
 

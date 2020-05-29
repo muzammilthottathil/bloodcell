@@ -59,13 +59,8 @@ module.exports = {
                             httpOnly: true,
                         })
                         
-                        // console.log('login succesful');
-                        // res.redirect('/faculty/' + user.faculty_id);
                         if(user.admin) {
-                            res.render('adminHome.ejs', {
-                                title : 'Home',
-                                username : 'Nss'
-                            })
+                            res.redirect('/admin')
                         }
                         else {
                             res.render('studentHome.ejs', {
@@ -90,10 +85,22 @@ module.exports = {
     },
 
     getAdminHomePage : (req, res) => {
-        res.render('adminHome.ejs', {
-            title : 'Home',
-            username : 'Nss'
+
+        let getRequirementsQuery = 'SELECT * FROM requirement';
+        db.query(getRequirementsQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+
+            // console.log(rows);
+            res.render('adminHome.ejs', {
+                title : 'Home',
+                username : 'Nss',
+                requirements : rows
+            })
         })
+        
     },
 
     addAdmin : (req, res) => {

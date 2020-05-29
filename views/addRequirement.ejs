@@ -1,7 +1,7 @@
 <%- include('partials/header.ejs') -%>
 <body>
     <div>
-        <form action="/admin/addrequirement" method="POST">
+        <form action="/admin/addrequirement" onsubmit="return checkPhoneNo()" method="POST">
             <div>
                 <label for="patientName">Patient Name : </label>
                 <input type="text" name="patientName" required>
@@ -45,7 +45,11 @@
             </div>
             <div>
                 <label for="contactNo">Contact No : </label>
-                <input type="contactNo" name="contactNo" required>
+                <input type="contactNo" name="contactNo" id="contactNo" required>
+            </div>
+            <div>
+                <label for="date">Date Of requirement : </label>
+                <input type="date" name="date" required>
             </div>
             <div>
                 <button type="submit">Add Requirement</button>
@@ -56,6 +60,11 @@
     <script lang="javascript">
         function checkPhoneNo() {
             let phoneNo = document.getElementById("contactNo").value;
+            
+            if(phoneNo.length < 10) {
+                alert('Enter a valid phone no.!!!');
+                return false;
+            }
             for(let i = 0; i <= phoneNo.length; i++) {
                 let currChar = phoneNo.charAt(i);
                 if(isNaN(currChar) && currChar != ' ') {

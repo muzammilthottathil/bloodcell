@@ -3,11 +3,37 @@
     <div>
         <h3>Welcome <%= username %></h3>
     </div>
-    <br>
-    <br>
+    <br><br>
     <div>
         <a href="/admin/adddonor"><button>Add Donor</button></a>
         <a href="/admin/addrequirement"><button>Add Requirement</button></a>
         <a href="/admin/addhospital"><button>Add Hospital</button></a>
+    </div>
+    <br>
+    <h3>Requirements</h3>
+    <div>
+        <ol>
+            <% requirements.forEach(requirement => { %>
+                <div>
+                    <li>
+                        <div>
+                            Patient Name : <%= requirement.patient_name %> <br>
+                            Bystander : <%= requirement.by_stander %> <br>
+                            Blood Group : <%= requirement.blood_group %> <br>
+                            No. of units : <%= requirement.quantity %> <br>
+                            Donation Type : <%= requirement.type_of_requirement %> <br>
+                            Hospital : <%= requirement.hospital %> <br>
+                            Contact No : <%= requirement.contact_no %> <br>
+                            Date : <%= requirement.date %> <br>
+                        </div>
+                        <div>
+                            <a href="/admin/<%= requirement.requirement_id %>/assigndonor"><button> Assign Donor</button></a>
+                            <a href="/admin/<%= requirement.requirement_id %>/close"><button>Close</button></a>
+                        </div>
+
+                    </li>
+                </div>
+            <% }) %>
+        </ol>
     </div>
 </body>

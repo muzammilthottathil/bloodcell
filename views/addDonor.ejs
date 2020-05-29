@@ -2,7 +2,7 @@
 
 <body>
     <div>
-        <form action="/admin/adddonor" method="POST">
+        <form action="/admin/adddonor" onsubmit="return checkPhoneNo()" method="POST">
             <div>
                 <label for="universityRegNO">University Register No. : </label>
                 <input type="text" name="universityRegNO" default="<%= username %>">
@@ -34,7 +34,7 @@
             </div>
             <div>
                 <label for="phoneNo">Contact No : </label>
-                <input type="number" name="phoneNo" id="phoneNo" required>
+                <input type="text" name="phoneNo" id="phoneNo" required>
             </div>
             <div>
                 <label for="email">Email : </label>
@@ -70,5 +70,25 @@
             </div>
         </form>
     </div>
+
+    <script lang="javascript">
+        function checkPhoneNo() {
+            let phoneNo = document.getElementById("phoneNo").value;
+
+            if(phoneNo.length < 10) {
+                alert('Enter a valid phone no.!!!');
+                return false;
+            }
+            
+            for(let i = 0; i <= phoneNo.length; i++) {
+                let currChar = phoneNo.charAt(i);
+                if(isNaN(currChar) && currChar != ' ') {
+                    alert('Enter valid phone no.!!!');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
     
 </body>

@@ -10,8 +10,7 @@ module.exports = {
     },
 
     addDonorDetails : (req, res) => {
-        // res.send('Details added succesfully');
-        // console.log(req.body);
+
         let universityRegNo = req.body.universityRegNO;
         let name = req.body.name;
         let admissionYear = req.body.admissionYear;
@@ -28,12 +27,14 @@ module.exports = {
 
         db.query(enterDetailQuery, values, (err, rows, fields) => {
             if(err) {
-                // console.log(err);
+                console.log(err);
                 res.send(err);
                 return;
             }
 
-            res.send('Details added succesfully');
+            // res.send('Details added succesfully');
+            console.log('Donor added succesfully');
+            res.redirect('/admin');
         })
 
 
