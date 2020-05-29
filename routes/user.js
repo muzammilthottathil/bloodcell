@@ -64,6 +64,7 @@ module.exports = {
                         if(user.admin) {
                             res.render('adminHome.ejs', {
                                 title : 'Home',
+                                username : 'Nss'
                             })
                         }
                         else {
@@ -86,6 +87,13 @@ module.exports = {
             })
         })
 
+    },
+
+    getAdminHomePage : (req, res) => {
+        res.render('adminHome.ejs', {
+            title : 'Home',
+            username : 'Nss'
+        })
     },
 
     addAdmin : (req, res) => {
@@ -114,7 +122,5 @@ module.exports = {
         })
     },
 
-    addDonorDetails : (req, res) => {
-        res.send('Details added succesfully');
-    }
+    
 }

@@ -2,10 +2,10 @@
 
 <body>
     <div>
-        <form action="/student/<%= username %>/adddetails" method="POST">
+        <form action="/admin/adddonor" method="POST">
             <div>
-                <label>University Register No. : </label>
-                <label><%= username %></label>
+                <label for="universityRegNO">University Register No. : </label>
+                <input type="text" name="universityRegNO" default="<%= username %>">
             </div>
             <div>
                 <label for="name">Name : </label>
@@ -63,7 +63,7 @@
             </div>
             <div>
                 <label for="lastDonation">Date of Last Donation : </label>
-                <input type="date" name="lastDonation" id="name" required>
+                <input type="date" name="lastDonation" id="name">
             </div>
             <div>
                 <button type="submit">Submit</button>

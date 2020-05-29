@@ -5,9 +5,10 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { getHomePage } = require('./routes/index');
-const { getLoginPage, loginUser, addAdmin, addDonorDetails } = require('./routes/user');
-
-// const { addUser } = require('./addUser');
+const { getLoginPage, loginUser, addAdmin, getAdminHomePage } = require('./routes/user');
+const { getAddDonorPage, addDonorDetails } = require('./routes/donor');
+const { getAddRequirementPage, addRequirement } = require('./routes/requirement');
+const { getAddHospitalPage, addHospital } = require('./routes/hospital');
 
 require('dotenv').config();
 
@@ -31,8 +32,18 @@ app.get('/', getHomePage);
 app.get('/login', getLoginPage);
 app.post('/login', loginUser);
 
-app.post('/student/:username/adddetails', addDonorDetails);
+app.get('/admin', getAdminHomePage);
 
+app.get('/admin/adddonor', getAddDonorPage);
+app.post('/admin/adddonor', addDonorDetails);
+
+app.get('/admin/addrequirement', getAddRequirementPage);
+app.post('/admin/addrequirement', addRequirement);
+
+app.get('/admin/addhospital', getAddHospitalPage);
+app.post('/admin/addhospital', addHospital);
+
+app.post('/student/:username/adddetails', addDonorDetails);
 
 app.post('/add/admin', addAdmin);
 

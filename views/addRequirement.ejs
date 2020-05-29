@@ -1,0 +1,69 @@
+<%- include('partials/header.ejs') -%>
+<body>
+    <div>
+        <form action="/admin/addrequirement" method="POST">
+            <div>
+                <label for="patientName">Patient Name : </label>
+                <input type="text" name="patientName" required>
+            </div>
+            <div>
+                <label for="bystander">Bystander Name : </label>
+                <input type="text" name="bystander" required>
+            </div>
+            <div>
+                <label for="bloodgroup">Blood Group : </label>
+                <select name="bloodgroup" id="">
+                    <option value="A+ve">A+ve</option>
+                    <option value="A-ve">A-ve</option>
+                    <option value="B+ve">B+ve</option>
+                    <option value="B-ve">B-ve</option>
+                    <option value="AB+ve">AB+ve</option>
+                    <option value="AB-ve">AB-ve</option>
+                    <option value="O+ve">O+ve</option>
+                    <option value="O-ve">O-ve</option>
+                </select>
+            </div>
+            <div>
+                <label for="noOfUnits">No. of Units : </label>
+                <input type="number" name="noOfUnits" required>
+            </div>
+            <div>
+                <label for="typeOfDonation">Type Of Donation : </label>
+                <select name="typeOfDonation" id="">
+                    <option value="Normal Donation" selected>Normal Donation</option>
+                    <option value="Platelet Donation" default>Platelet Donation</option>
+                </select>
+            </div>
+            <div>
+                <label for="hospital">Hospital : </label>
+                <!-- <input type="text" name="patientName" required> -->
+                <select name="hospital" id="">
+                    <% hospitals.forEach(hospital => { %>
+                        <option value="<%= hospital.name %>"><%= hospital.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div>
+                <label for="contactNo">Contact No : </label>
+                <input type="contactNo" name="contactNo" required>
+            </div>
+            <div>
+                <button type="submit">Add Requirement</button>
+            </div>
+        </form>
+    </div>
+
+    <script lang="javascript">
+        function checkPhoneNo() {
+            let phoneNo = document.getElementById("contactNo").value;
+            for(let i = 0; i <= phoneNo.length; i++) {
+                let currChar = phoneNo.charAt(i);
+                if(isNaN(currChar) && currChar != ' ') {
+                    alert('Enter valid phone no.!!!');
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
