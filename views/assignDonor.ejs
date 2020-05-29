@@ -1,0 +1,29 @@
+<body>
+    <h3>Select Donor</h3>
+    <table style="width:100%" border="2px">
+        <tr>
+            <th>University Register No</th>
+            <th>Donor Name</th>
+            <th>Blood Group</th>
+            <th>Department</th>
+            <th>Year of Admission</th>
+            <th>Phone No</th>
+            <th>Last Donation</th>
+        </tr>
+        <% donors.forEach(donor => { %>
+            <tr>
+                <td><%=donor.university_reg_no %></td>
+                <td><%=donor.name %></td>
+                <td><%=donor.blood_group %></td>
+                <td><%=donor.dept %></td>
+                <td><%=donor.year_of_admission %></td>
+                <td><%=donor.phone_no %></td>
+                <td><%=donor.last_donation %></td>
+                <td><a href="assigndonor/<%= donor.donor_id %>"><button>Select</button></a></td>
+            </tr>     
+        <% }) %>
+    </table>
+    <div>
+
+    </div>
+</body>

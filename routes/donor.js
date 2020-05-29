@@ -22,8 +22,8 @@ module.exports = {
         let weight = req.body.weight;
         let lastDonation = req.body.lastDonation;
 
-        let enterDetailQuery = 'INSERT IGNORE INTO donor VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        let values = [universityRegNo, name, admissionYear, dept, phoneNo, email, bloodGroup, height, weight, lastDonation];
+        let enterDetailQuery = 'INSERT IGNORE INTO donor (university_reg_no,name, year_of_admission, dept, phone_no, blood_group, height, weight, mail_id, last_donation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        let values = [universityRegNo, name, admissionYear, dept, phoneNo, bloodGroup, height, weight, email, lastDonation];
 
         db.query(enterDetailQuery, values, (err, rows, fields) => {
             if(err) {

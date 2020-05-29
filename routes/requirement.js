@@ -48,12 +48,39 @@ module.exports = {
     },
 
     getAssignDonorPage : (req, res) => {
-        res.send('Assign donor from here');
+        // res.send('Assign donor from here');
+        let getDonorsQuery = 'SELECT * FROM donor';
+        db.query(getDonorsQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+            // console.log(rows);
+            res.render('assignDonor.ejs', {
+                donors : rows
+            });
+        })
+
     },
 
     assignDonor : (req, res) => {
-        res.json({
-            message : 'Donor assigned successfully'
+        
+        // console.log(req.params);
+        let donorId = req.params.donorid;
+        let requirementId = req.params.requirementid;
+        let today = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+
+        let assignDonorQuery = 'INSERT IGNORE INTO donations VALUES (?, ?, ?)';
+        let values = [ requirementId, donorId, today ];
+
+        db.query(assignDonorQuery, values, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+
+            console.log('Donor assigned successfully');
+            res.redirect('/admin');
         })
     },
 

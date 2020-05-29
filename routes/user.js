@@ -93,11 +93,13 @@ module.exports = {
                 return res.send(err);
             }
 
+            let requirements = rows;
+
             // console.log(rows);
             res.render('adminHome.ejs', {
                 title : 'Home',
                 username : 'Nss',
-                requirements : rows
+                requirements : requirements
             })
         })
         

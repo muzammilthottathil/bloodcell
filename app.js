@@ -44,7 +44,7 @@ app.get('/admin/addhospital', getAddHospitalPage);
 app.post('/admin/addhospital', addHospital);
 
 app.get('/admin/:requirementid/assigndonor', getAssignDonorPage);
-app.post('/admin/:requirementid/assigndonor', assignDonor);
+app.get('/admin/:requirementid/assigndonor/:donorid', assignDonor);
 
 app.get('/admin/:requirementid/close', closeRequirement);
 

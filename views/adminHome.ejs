@@ -14,25 +14,43 @@
     <div>
         <ol>
             <% requirements.forEach(requirement => { %>
-                <div>
-                    <li>
-                        <div>
-                            Patient Name : <%= requirement.patient_name %> <br>
-                            Bystander : <%= requirement.by_stander %> <br>
-                            Blood Group : <%= requirement.blood_group %> <br>
-                            No. of units : <%= requirement.quantity %> <br>
-                            Donation Type : <%= requirement.type_of_requirement %> <br>
-                            Hospital : <%= requirement.hospital %> <br>
-                            Contact No : <%= requirement.contact_no %> <br>
-                            Date : <%= requirement.date %> <br>
-                        </div>
-                        <div>
-                            <a href="/admin/<%= requirement.requirement_id %>/assigndonor"><button> Assign Donor</button></a>
-                            <a href="/admin/<%= requirement.requirement_id %>/close"><button>Close</button></a>
-                        </div>
+                <% if(!requirement.closed) {%>
+                    <div>
+                        <li>
+                            <div>
+                                Patient Name : <%= requirement.patient_name %> <br>
+                                Bystander : <%= requirement.by_stander %> <br>
+                                Blood Group : <%= requirement.blood_group %> <br>
+                                No. of units : <%= requirement.quantity %> <br>
+                                Donation Type : <%= requirement.type_of_requirement %> <br>
+                                Hospital : <%= requirement.hospital %> <br>
+                                Contact No : <%= requirement.contact_no %> <br>
+                                Date : <%= requirement.date %> <br>
+                            </div>
+                            <br>
+                            <div>
+                                Donors : <br>
+                                <div>
+                                    <ol>
+                                        <%= donors.forEach(donor => { %>
+                                            <li>
+                                                Name :  <br>
+                                                Year Of Admission : <br>
+                                                Department : <br>
+                                                Phone No : <br>
+                                            </li>
+                                        <% }) %>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="/admin/<%= requirement.requirement_id %>/assigndonor"><button> Assign Donor</button></a>
+                                <a href="/admin/<%= requirement.requirement_id %>/close"><button>Close</button></a>
+                            </div>
 
-                    </li>
-                </div>
+                        </li>
+                    </div>
+                <% } %>
             <% }) %>
         </ol>
     </div>
