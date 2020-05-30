@@ -116,8 +116,8 @@ module.exports = {
                 return;
             }
 
-            let lastDonation = rows[0].last_donation;
-            // console.log(lastDonation);
+            let lastDonation = rows[0].last_donation.toJSON().slice(0,10).replace(/-/g,'-');
+            console.log(lastDonation);
 
             let assignDonorQuery = 'INSERT INTO donations VALUES (?, ?, ?, ?)';
             let values = [ requirementId, donorId, today, lastDonation ];
@@ -180,11 +180,9 @@ module.exports = {
                 res.redirect(`/admin/${requirementId}/details`);
                 return;
             }
-            let prevLastDonation = rows[0].donor_prev_last_donation;
-            prevLastDonation.setDate(prevLastDonation.getDate()+1);
-            prevLastDonation = prevLastDonation.toJSON().slice(0,10);
+            let prevLastDonation = rows[0].donor_prev_last_donation.toJSON().slice(0,10).replace(/-/g,'-');
             console.log(prevLastDonation);
-            console.log(prevLastDonation);
+
 
             let updateLastDonationQuery = `UPDATE donor SET last_donation = '${prevLastDonation}' WHERE donor_id = ${donorId}`;
             db.query(updateLastDonationQuery, (err, rows, fields) => {

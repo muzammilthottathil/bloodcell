@@ -18,7 +18,9 @@
                 <td><%=donor.dept %></td>
                 <td><%=donor.year_of_admission %></td>
                 <td><%=donor.phone_no %></td>
-                <td><%=donor.last_donation %></td>
+                <% if(donor.last_donation.toJSON().slice(0,10) !== '2000-01-01') { %>
+                    <td><%= donor.last_donation.toJSON().slice(0,10).replace(/-/g,'-') %></td>
+                <% } %>
                 <td><a href="assigndonor/<%= donor.donor_id %>"><button>Select</button></a></td>
             </tr>     
         <% }) %>

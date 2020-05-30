@@ -22,6 +22,11 @@ module.exports = {
         let weight = req.body.weight;
         let lastDonation = req.body.lastDonation;
 
+        if(lastDonation == '') {
+            // console.log('Empty string');
+            lastDonation = '2000-01-01';
+        }
+
         let enterDetailQuery = 'INSERT IGNORE INTO donor (university_reg_no,name, year_of_admission, dept, phone_no, blood_group, height, weight, mail_id, last_donation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         let values = [universityRegNo, name, admissionYear, dept, phoneNo, bloodGroup, height, weight, email, lastDonation];
 
@@ -42,6 +47,7 @@ module.exports = {
 
         let getDonorsQuery = `SELECT * FROM donor`;
         db.query(getDonorsQuery, (err, rows, fields) => {
+            // console.log(rows[0].lastDonation.toJSON().slice(0,10).replace(/-/g,'-'));
             console.log(rows);
             res.render('donors.ejs', {
                 title : 'Donors',

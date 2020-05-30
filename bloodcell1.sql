@@ -74,11 +74,33 @@ select * from donations;
 select donor_prev_last_donationdonations from donations where requirement_id = 3 and donor_id = 1;
 SELECT donor_prev_last_donation FROM donations WHERE requirement_id = 3 AND donor_id = 1;
 
+select * from requirement;
+
 
 ALTER TABLE `bloodcell`.`donations` 
 ADD COLUMN `donor_prev_last_donation` DATE NOT NULL AFTER `date_of_donation`;
 
 select * from donations;
+
+
+
+
+ALTER TABLE `bloodcell`.`donor` 
+CHANGE COLUMN `university_reg_no` `university_reg_no` VARCHAR(15) NULL ,
+CHANGE COLUMN `height` `height` INT NULL ,
+CHANGE COLUMN `weight` `weight` INT NULL ,
+CHANGE COLUMN `mail_id` `mail_id` VARCHAR(45) NULL ;
+
+ALTER TABLE `bloodcell`.`donor` 
+CHANGE COLUMN `last_donation` `last_donation` VARCHAR(45) NOT NULL ;
+
+ALTER TABLE `bloodcell`.`donor` 
+CHANGE COLUMN `last_donation` `last_donation` DATE NOT NULL ;
+
+ALTER TABLE `bloodcell`.`donations` 
+CHANGE COLUMN `donor_prev_last_donation` `donor_prev_last_donation` VARCHAR(45) NOT NULL ;
+
+
 
 
 
