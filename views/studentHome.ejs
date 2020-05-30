@@ -1,7 +1,7 @@
 <%- include('partials/header.ejs') -%>
 
 <body>
-    <div>
+    <div class="container">
         <form action="/student/<%= username %>/adddetails" method="POST">
             <div>
                 <label>University Register No. : </label>
@@ -11,17 +11,17 @@
                 <label for="name">Name : </label>
                 <input type="text" name="name" id="name" required>
             </div>
-            <div>
-                <label for="admissionYear">Year Of Admission : </label>
+            <div class="">
                 <select name="admissionYear" id="admissionYear" required>
                     <option value="2017">2017</option>
                     <option value="2018">2018</option>
                     <option value="2019">2019</option>
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
-                </select>
+                </select>     
+                <label for="admissionYear">Year Of Admission : </label>
             </div>
-            <div>
+            <div class="">
                 <label for="dept">Department : </label>
                 <select name="dept" id="dept">
                     <option value="Computer Sience">Computer Sience</option>
@@ -40,7 +40,7 @@
                 <label for="email">Email : </label>
                 <input type="email" name="email" id="email" required>
             </div>
-            <div>
+            <div class="input-field col s12">
                 <label for="bloodGroup">Blood Group : </label>
                 <select name="bloodGroup" id="bloodGroup">
                     <option value="A+ve">A+ve</option>
@@ -70,5 +70,4 @@
             </div>
         </form>
     </div>
-    
 </body>

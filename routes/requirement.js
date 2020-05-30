@@ -21,7 +21,6 @@ module.exports = {
 
     addRequirement : (req, res) => {
 
-        // console.log(req.body);
         let patientName = req.body.patientName;
         let bystander = req.body.bystander;
         let bloodGroup = req.body.bloodgroup;
@@ -47,9 +46,49 @@ module.exports = {
         })
     },
 
+    getRequirementDetailsPage : (req, res) => {
+        // res.send('requirement details will be displayed here');
+        let requirementId = req.params.requirementid;
+
+        let getRequirementDetailsQuery = `SELECT * FROM requirement WHERE requirement_id = ${requirementId}`;
+        let getDonorsQuery = `SELECT name, year_of_admission, dept, phone_no
+            FROM donations, donor
+            WHERE donations.requirement_id = ${requirementId} AND donations.donor_id = donor.donor_id;`;
+
+        db.query(getRequirementDetailsQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+            let requirement = rows[0];
+            console.log(requirement);
+
+            db.query(getDonorsQuery, (err, rows, fields) => {
+                if(err) {
+                    console.log(err);
+                    return res.send(err);
+                }
+                
+                let donors = rows;
+                console.log(donors);
+                res.render('requirementDetails.ejs', {
+                    title : 'Requirement Details',
+                    donors : donors,
+                    requirement : requirement
+                })
+            })
+
+        })
+
+        
+
+
+        
+    },
+
     getAssignDonorPage : (req, res) => {
         // res.send('Assign donor from here');
-        let getDonorsQuery = 'SELECT * FROM donor';
+        let getDonorsQuery = 'SELECT * FROM donor ORDER BY last_donation';
         db.query(getDonorsQuery, (err, rows, fields) => {
             if(err) {
                 console.log(err);
@@ -72,7 +111,17 @@ module.exports = {
 
         let assignDonorQuery = 'INSERT IGNORE INTO donations VALUES (?, ?, ?)';
         let values = [ requirementId, donorId, today ];
+        let updateLastDonationQuery = `UPDATE donor SET last_donation = '${today}' WHERE donor_id = ${donorId}`;
 
+        db.query(updateLastDonationQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+
+            console.log('Last donation update successfully');
+        })
+        
         db.query(assignDonorQuery, values, (err, rows, fields) => {
             if(err) {
                 console.log(err);
@@ -80,7 +129,7 @@ module.exports = {
             }
 
             console.log('Donor assigned successfully');
-            res.redirect('/admin');
+            res.redirect('/admin/' + requirementId + '/details');
         })
     },
 
@@ -98,5 +147,23 @@ module.exports = {
             console.log('Requirement closed');
             res.redirect('/admin');
         })
+    },
+
+    getClosedRequirementsPage : (req, res) => {
+
+        // res.send('Closed requirements will be shown here');
+        let getClosedRequirementsQuery = `SELECT * FROM requirement WHERE closed = 1 ORDER BY date DESC`;
+        db.query(getClosedRequirementsQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+            // console.log(rows);
+            res.render('closedRequirements.ejs', {
+                title : 'Closed Requirements',
+                requirements : rows
+            })
+        })
     }
+
 }

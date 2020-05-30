@@ -1,6 +1,7 @@
 <%- include('partials/header.ejs') -%>
 
 <body>
+    <%- include('partials/navbar.ejs') -%>
     <div>
         <form action="/admin/adddonor" onsubmit="return checkPhoneNo()" method="POST">
             <div>
@@ -90,5 +91,4 @@
             return true;
         }
     </script>
-    
 </body>

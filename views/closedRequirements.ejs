@@ -1,18 +1,10 @@
 <%- include('partials/header.ejs') -%>
 <body>
     <%- include('partials/navbar.ejs') -%>
+
     <div>
-        <h3>Welcome <%= username %></h3>
+        <h3>Closed Requirements</h3>
     </div>
-    <!-- <br><br>
-    <div>
-        <a href="/admin/adddonor"><button>Add Donor</button></a>
-        <a href="/admin/addrequirement"><button>Add Requirement</button></a>
-        <a href="/admin/addhospital"><button>Add Hospital</button></a>
-        <a href="/admin/closedrequirements"><button>Closed Requirements</button></a>
-    </div> -->
-    <br>
-    <h3>Requirements</h3>
     <div>
         <table width="100%">
             <tr>
@@ -22,15 +14,13 @@
                 <th>No. of units</th>
             </tr>
             <% requirements.forEach(requirement => { %>
-                <% if(!requirement.closed) { %>
                     <tr>
                         <td><%= requirement.patient_name %></td>
                         <td><%= requirement.by_stander %></td>
                         <td><%= requirement.blood_group %></td>
                         <td><%= requirement.quantity %></td>
                         <td><a href="/admin/<%= requirement.requirement_id %>/details"><button>Details</button></a></td>
-                    </tr>
-                <% } %>               
+                    </tr>             
             <% }) %>
         </table>                   
     </div>

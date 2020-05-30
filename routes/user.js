@@ -86,7 +86,7 @@ module.exports = {
 
     getAdminHomePage : (req, res) => {
 
-        let getRequirementsQuery = 'SELECT * FROM requirement';
+        let getRequirementsQuery = 'SELECT * FROM requirement ORDER BY date DESC';
         db.query(getRequirementsQuery, (err, rows, fields) => {
             if(err) {
                 console.log(err);
@@ -95,11 +95,11 @@ module.exports = {
 
             let requirements = rows;
 
-            // console.log(rows);
             res.render('adminHome.ejs', {
                 title : 'Home',
                 username : 'Nss',
-                requirements : requirements
+                requirements : requirements,
+                // donors : donors
             })
         })
         
