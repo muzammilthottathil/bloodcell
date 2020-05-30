@@ -5,11 +5,15 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { getHomePage } = require('./routes/index');
-const { getLoginPage, loginUser, addAdmin, getAdminHomePage } = require('./routes/user');
+const { getLoginPage, loginUser, addAdmin, getAdminHomePage, logout } = require('./routes/user');
 const { getAddDonorPage, addDonorDetails } = require('./routes/donor');
 const { getAddRequirementPage, addRequirement, getAssignDonorPage, assignDonor, closeRequirement, getRequirementDetailsPage } = require('./routes/requirement');
 const { getClosedRequirementsPage }  = require('./routes/requirement');
 const { getAddHospitalPage, addHospital } = require('./routes/hospital');
+
+const { verifyAdmin } = require('./middlewares');
+
+// const { addUser } = require('./addUser');
 
 require('dotenv').config();
 
@@ -33,28 +37,30 @@ app.get('/', getHomePage);
 app.get('/login', getLoginPage);
 app.post('/login', loginUser);
 
-app.get('/admin', getAdminHomePage);
+app.get('/admin', verifyAdmin, getAdminHomePage);
 
-app.get('/admin/adddonor', getAddDonorPage);
-app.post('/admin/adddonor', addDonorDetails);
+app.get('/admin/adddonor', verifyAdmin, getAddDonorPage);
+app.post('/admin/adddonor', verifyAdmin, addDonorDetails);
 
-app.get('/admin/addrequirement', getAddRequirementPage);
-app.post('/admin/addrequirement', addRequirement);
+app.get('/admin/addrequirement', verifyAdmin, getAddRequirementPage);
+app.post('/admin/addrequirement', verifyAdmin, addRequirement);
 
-app.get('/admin/addhospital', getAddHospitalPage);
-app.post('/admin/addhospital', addHospital);
+app.get('/admin/addhospital', verifyAdmin, getAddHospitalPage);
+app.post('/admin/addhospital', verifyAdmin, addHospital);
 
-app.get('/admin/closederequirements', getClosedRequirementsPage);
+app.get('/admin/closederequirements', verifyAdmin, getClosedRequirementsPage);
 
-app.get('/admin/:requirementid/details', getRequirementDetailsPage);
+app.get('/admin/:requirementid/details', verifyAdmin, getRequirementDetailsPage);
 
 
-app.get('/admin/:requirementid/assigndonor', getAssignDonorPage);
-app.get('/admin/:requirementid/assigndonor/:donorid', assignDonor);
+app.get('/admin/:requirementid/assigndonor', verifyAdmin, getAssignDonorPage);
+app.get('/admin/:requirementid/assigndonor/:donorid', verifyAdmin, assignDonor);
 
-app.get('/admin/:requirementid/close', closeRequirement);
+app.get('/admin/:requirementid/close', verifyAdmin, closeRequirement);
 
 app.post('/student/:username/adddetails', addDonorDetails);
+
+app.get('/logout', logout);
 
 app.post('/add/admin', addAdmin);
 

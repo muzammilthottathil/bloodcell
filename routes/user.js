@@ -37,6 +37,7 @@ module.exports = {
             }
 
             let user = rows[0];
+            console.log(user);
             bcrypt.compare(password, user.password, (err, match) => {
 
                 if(err) {
@@ -46,7 +47,7 @@ module.exports = {
                 }
                 
                 if(match) {
-                    jwt.sign({ username : username, admin : user.admin }, process.env.JWT_SECRET_KEY, { expiresIn : "3600s" }, (err, token) => {
+                    jwt.sign({ userId : user.user_id, username : user.user_name, admin : user.admin }, process.env.JWT_SECRET_KEY, { expiresIn : "86400s" }, (err, token) => {
                         if(err) {
                             console.log(err);
                             res.status(300).send(err);
@@ -82,6 +83,16 @@ module.exports = {
             })
         })
 
+    },
+
+    logout : (req, res) => {
+
+        res.cookie('token', null, {
+            expires: new Date(Date.now() + 1),
+            secure: false, 
+            httpOnly: true,
+        })
+        res.redirect('/login');
     },
 
     getAdminHomePage : (req, res) => {
