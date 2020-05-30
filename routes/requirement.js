@@ -79,11 +79,7 @@ module.exports = {
             })
 
         })
-
-        
-
-
-        
+ 
     },
 
     getAssignDonorPage : (req, res) => {
@@ -109,24 +105,40 @@ module.exports = {
         let requirementId = req.params.requirementid;
         let today = new Date().toJSON().slice(0,10).replace(/-/g,'-');
 
-        let assignDonorQuery = 'INSERT IGNORE INTO donations VALUES (?, ?, ?)';
+        let assignDonorQuery = 'INSERT INTO donations VALUES (?, ?, ?)';
         let values = [ requirementId, donorId, today ];
         let updateLastDonationQuery = `UPDATE donor SET last_donation = '${today}' WHERE donor_id = ${donorId}`;
-
-        db.query(updateLastDonationQuery, (err, rows, fields) => {
-            if(err) {
-                console.log(err);
-                return res.send(err);
-            }
-
-            console.log('Last donation update successfully');
-        })
-        
+        let updateNoOfDonorsQuery = `UPDATE requirement SET donors_assigned = donors_assigned + 1 WHERE requirement_id = ${requirementId}`;
+     
         db.query(assignDonorQuery, values, (err, rows, fields) => {
+            
             if(err) {
+                if(err.errno === 1062) {
+                    console.log(err.errno);
+                    res.redirect('/admin/' + requirementId + '/details');
+                    return;
+                }
                 console.log(err);
                 return res.send(err);
             }
+
+            db.query(updateNoOfDonorsQuery, (err, rows, fields) => {
+                if(err) {
+                    console.log(err);
+                    return res.send(err);
+                }
+    
+                console.log('No. of donors updated');
+            })
+
+            db.query(updateLastDonationQuery, (err, rows, fields) => {
+                if(err) {
+                    console.log(err);
+                    return res.send(err);
+                }
+    
+                console.log('Last donation update successfully');
+            })
 
             console.log('Donor assigned successfully');
             res.redirect('/admin/' + requirementId + '/details');

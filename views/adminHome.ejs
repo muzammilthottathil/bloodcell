@@ -20,6 +20,7 @@
                 <th>Bystander</th>
                 <th>Blood Group</th>
                 <th>No. of units</th>
+                <th>Donors Assigned</th>
             </tr>
             <% requirements.forEach(requirement => { %>
                 <% if(!requirement.closed) { %>
@@ -28,7 +29,10 @@
                         <td><%= requirement.by_stander %></td>
                         <td><%= requirement.blood_group %></td>
                         <td><%= requirement.quantity %></td>
-                        <td><a href="/admin/<%= requirement.requirement_id %>/details"><button>Details</button></a></td>
+                        <td><%= requirement.donors_assigned %></td>
+                        <td><a href="/admin/<%= requirement.requirement_id %>/assigndonor"><button>Assign Donor</button></a></td>
+                        <td><a href="/admin/<%= requirement.requirement_id %>/close"><button>Close Requirement</button></a></td>
+                        <td><a href="/admin/<%= requirement.requirement_id %>/details"><button>See Donors</button></a></td>
                     </tr>
                 <% } %>               
             <% }) %>

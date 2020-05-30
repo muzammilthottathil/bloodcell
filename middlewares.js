@@ -16,8 +16,6 @@ module.exports = {
                 return;
             }
 
-            // console.log(decoded);
-            // console.log(req.params);
             if(decoded.facultyId == req.params.id) {
                 req.body.facultyId = decoded.facultyId;
                 next();
