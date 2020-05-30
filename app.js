@@ -62,7 +62,7 @@ app.post('/student/:username/adddetails', addDonorDetails);
 
 app.get('/logout', logout);
 
-app.post('/add/admin', addAdmin);
+// app.post('/add/admin', addAdmin);
 
 
 app.listen(process.env.PORT, (err) => {
