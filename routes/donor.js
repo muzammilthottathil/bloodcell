@@ -54,5 +54,60 @@ module.exports = {
                 donors : rows
             })
         })        
+    },
+
+    editDonorPage : (req, res) => {
+
+        let donorId = req.params.donorid;
+
+        let getDonorDetailsQuery = `SELECT * FROM donor WHERE donor_id = ${donorId}`;
+        db.query(getDonorDetailsQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+            console.log(rows[0]);
+            res.render('editDonor.ejs', {
+                title : 'Edit Donor',
+                donor : rows[0]
+            })
+        })
+    },
+
+    editDonor : (req, res) => {
+        
+        let donorId = req.params.donorid;
+        console.log(req.params);
+        let universityRegNo = req.body.universityRegNO;
+        let name = req.body.name;
+        let admissionYear = req.body.admissionYear;
+        let dept = req.body.dept;
+        let phoneNo = req.body.phoneNo;
+        let email = req.body.email;
+        let bloodGroup = req.body.bloodGroup;
+        let height = req.body.height;
+        let weight = req.body.weight;
+        let lastDonation = req.body.lastDonation;
+
+        if(lastDonation == '') {
+            // console.log('Empty string');
+            lastDonation = '2000-01-01';
+        }
+
+        let updateDetailsQuery = `UPDATE donor 
+            SET university_reg_no = ?, name = ?, year_of_admission = ?, dept = ?, phone_no = ?, blood_group = ?, height = ?, weight = ?, mail_id = ?, last_donation = ?
+            WHERE donor_id = ${donorId}`;
+
+        let values = [ universityRegNo, name, admissionYear, dept, phoneNo, bloodGroup, height, weight, email, lastDonation ];
+
+        db.query(updateDetailsQuery, values, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+
+            res.redirect('/admin/donors');
+        })
+
     }
 }

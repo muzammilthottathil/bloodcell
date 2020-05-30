@@ -6,12 +6,12 @@ const cors = require('cors');
 
 const { getHomePage } = require('./routes/index');
 const { getLoginPage, loginUser, addAdmin, getAdminHomePage, logout } = require('./routes/user');
-const { getAddDonorPage, addDonorDetails, getDonorsPage } = require('./routes/donor');
+const { getAddDonorPage, addDonorDetails, getDonorsPage, editDonorPage, editDonor } = require('./routes/donor');
 const { getAddRequirementPage, addRequirement, getAssignDonorPage, assignDonor, closeRequirement, getRequirementDetailsPage } = require('./routes/requirement');
 const { getClosedRequirementsPage, deleteDonor }  = require('./routes/requirement');
-const { getAddHospitalPage, addHospital, getHospitalsPage } = require('./routes/hospital');
+const { getAddHospitalPage, addHospital, getHospitalsPage, editHospitalPage } = require('./routes/hospital');
 
-const { verifyAdmin } = require('./middlewares');
+const { verifyAdmin, verifyLogin } = require('./middlewares');
 
 // const { addUser } = require('./addUser');
 
@@ -34,8 +34,8 @@ app.set('view engine', 'ejs');
 
 app.get('/', getHomePage);
 
-app.get('/login', getLoginPage);
-app.post('/login', loginUser);
+app.get('/login', verifyLogin, getLoginPage);
+app.post('/login', verifyLogin, loginUser);
 
 app.get('/admin', verifyAdmin, getAdminHomePage);
 
@@ -48,12 +48,18 @@ app.post('/admin/addrequirement', verifyAdmin, addRequirement);
 app.get('/admin/addhospital', verifyAdmin, getAddHospitalPage);
 app.post('/admin/addhospital', verifyAdmin, addHospital);
 
-app.get('/admin/donors', getDonorsPage);
-app.get('/admin/hospitals', getHospitalsPage);
+app.get('/admin/donors', verifyAdmin, getDonorsPage);
+app.get('/admin/hospitals', verifyAdmin, getHospitalsPage);
+
+app.get('/admin/donors/:donorid/edit', editDonorPage);
+app.post('/admin/donors/:donorid/edit', editDonor);
+
+app.get('/admin/hospitals/:hospitalname/edit', editHospitalPage);
+// app.post('/admin/hospitals/:hospitalname/edit', editHospital);
 
 app.get('/admin/closederequirements', verifyAdmin, getClosedRequirementsPage);
 
-app.get('/admin/:requirementid/deletedonor/:donorid', deleteDonor);
+app.get('/admin/:requirementid/deletedonor/:donorid', verifyAdmin, deleteDonor);
 
 app.get('/admin/:requirementid/details', verifyAdmin, getRequirementDetailsPage);
 
@@ -62,7 +68,7 @@ app.get('/admin/:requirementid/assigndonor/:donorid', verifyAdmin, assignDonor);
 
 app.get('/admin/:requirementid/close', verifyAdmin, closeRequirement);
 
-app.post('/student/:username/adddetails', addDonorDetails);
+// app.post('/student/:username/adddetails', addDonorDetails);
 
 app.get('/logout', logout);
 

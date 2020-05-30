@@ -1,4 +1,4 @@
-<%- include('partials/header.ejs') -%>
+<%- include('partials/header.ejs') -%>  
 
 <body>
     <%- include('partials/navbar.ejs') -%>
@@ -14,6 +14,7 @@
             <td><%= hospital.street_address %></td>
             <td><%= hospital.landmark %></td>
             <td><%= hospital.contact_no %></td>
+            <td><a href="/admin/hospitals/<%= hospital.name %>/edit"><button>Edit</button></a></td>
         <% }) %>
     </table>
 </body>

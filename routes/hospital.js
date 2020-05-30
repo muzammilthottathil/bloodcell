@@ -38,5 +38,28 @@ module.exports = {
                 hospitals : rows
             })
         })
+    },
+
+    editHospitalPage : (req, res) => {
+
+        let hospitalName = req.params.hospitalname;
+
+        let getHospitalDetailsQuery = `SELECT * FROM hospital WHERE name = '${hospitalName}'`;
+        db.query(getHospitalDetailsQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+            if(rows.length === 0) {
+                res.json({
+                    message : 'Invalid hospital name'
+                })
+                return;
+            }
+            res.render('editHospital.ejs', {
+                title : 'Edit Hospital',
+                hospital : rows[0]
+            })
+        })
     }
 }

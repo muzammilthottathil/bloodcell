@@ -30,7 +30,7 @@ module.exports = {
 
     },
 
-    ifLoggedIn : (req, res, next) => {
+    verifyLogin : (req, res, next) => {
         let token = req.cookies.token;
         console.log("Checking if already logged in");
         // console.log(token);
@@ -46,8 +46,9 @@ module.exports = {
                 res.status(403).send(err);
                 return;
             }
-
-            res.redirect('/faculty/' + decoded.facultyId);
+            if(decoded.admin) {
+                res.redirect('/admin');
+            }
         });
     },
 
