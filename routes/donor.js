@@ -36,7 +36,17 @@ module.exports = {
             console.log('Donor added succesfully');
             res.redirect('/admin');
         })
+    },
 
+    getDonorsPage : (req, res) => {
 
+        let getDonorsQuery = `SELECT * FROM donor`;
+        db.query(getDonorsQuery, (err, rows, fields) => {
+            console.log(rows);
+            res.render('donors.ejs', {
+                title : 'Donors',
+                donors : rows
+            })
+        })        
     }
 }

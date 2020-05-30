@@ -105,7 +105,6 @@ module.exports = {
             }
 
             let requirements = rows;
-            // console.log(requirements);
 
             res.render('adminHome.ejs', {
                 title : 'Home',

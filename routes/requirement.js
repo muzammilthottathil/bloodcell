@@ -51,7 +51,7 @@ module.exports = {
         let requirementId = req.params.requirementid;
 
         let getRequirementDetailsQuery = `SELECT * FROM requirement WHERE requirement_id = ${requirementId}`;
-        let getDonorsQuery = `SELECT name, year_of_admission, dept, phone_no
+        let getDonorsQuery = `SELECT name, year_of_admission, dept, phone_no, donor.donor_id
             FROM donations, donor
             WHERE donations.requirement_id = ${requirementId} AND donations.donor_id = donor.donor_id;`;
 
@@ -61,7 +61,7 @@ module.exports = {
                 return res.send(err);
             }
             let requirement = rows[0];
-            console.log(requirement);
+            // console.log(requirement);
 
             db.query(getDonorsQuery, (err, rows, fields) => {
                 if(err) {
@@ -70,7 +70,7 @@ module.exports = {
                 }
                 
                 let donors = rows;
-                console.log(donors);
+                // console.log(donors);
                 res.render('requirementDetails.ejs', {
                     title : 'Requirement Details',
                     donors : donors,
@@ -105,23 +105,107 @@ module.exports = {
         let requirementId = req.params.requirementid;
         let today = new Date().toJSON().slice(0,10).replace(/-/g,'-');
 
-        let assignDonorQuery = 'INSERT INTO donations VALUES (?, ?, ?)';
-        let values = [ requirementId, donorId, today ];
-        let updateLastDonationQuery = `UPDATE donor SET last_donation = '${today}' WHERE donor_id = ${donorId}`;
-        let updateNoOfDonorsQuery = `UPDATE requirement SET donors_assigned = donors_assigned + 1 WHERE requirement_id = ${requirementId}`;
-     
-        db.query(assignDonorQuery, values, (err, rows, fields) => {
-            
+        let getDonorLastDonationQuery = `SELECT last_donation FROM donor WHERE donor_id = ${donorId}`;
+        db.query(getDonorLastDonationQuery, (err, rows, fields) => {
             if(err) {
-                if(err.errno === 1062) {
-                    console.log(err.errno);
-                    res.redirect('/admin/' + requirementId + '/details');
-                    return;
+                console.log(err);
+                return res.send(err);
+            }
+            if(rows.length === 0) {
+                res.redirect('/admin');
+                return;
+            }
+
+            let lastDonation = rows[0].last_donation;
+            // console.log(lastDonation);
+
+            let assignDonorQuery = 'INSERT INTO donations VALUES (?, ?, ?, ?)';
+            let values = [ requirementId, donorId, today, lastDonation ];
+            let updateLastDonationQuery = `UPDATE donor SET last_donation = '${today}' WHERE donor_id = ${donorId}`;
+            let updateNoOfDonorsQuery = `UPDATE requirement SET donors_assigned = donors_assigned + 1 WHERE requirement_id = ${requirementId}`;
+         
+            db.query(assignDonorQuery, values, (err, rows, fields) => {
+    
+                if(err) {
+                    if(err.errno === 1062) {
+                        console.log(err.errno);
+                        res.redirect('/admin/' + requirementId + '/details');
+                        return;
+                    }
+                    console.log(err);
+                    return res.send(err);
                 }
+    
+                db.query(updateNoOfDonorsQuery, (err, rows, fields) => {
+                    if(err) {
+                        console.log(err);
+                        return res.send(err);
+                    }
+        
+                    console.log('No. of donors updated');
+                })
+    
+                db.query(updateLastDonationQuery, (err, rows, fields) => {
+                    if(err) {
+                        console.log(err);
+                        return res.send(err);
+                    }
+        
+                    console.log('Last donation update successfully');
+                })
+    
+                console.log('Donor assigned successfully');
+                res.redirect('/admin/' + requirementId + '/details');
+            })
+
+        })
+
+        
+    },
+
+    deleteDonor : (req, res) => {
+        // res.send('Donor deleted succesfully');
+        console.log(req.params);
+        let requirementId = req.params.requirementid;
+        let donorId = req.params.donorid;
+
+        let getPrevLastDonation = `SELECT donor_prev_last_donation FROM donations WHERE requirement_id = ${requirementId} AND donor_id = ${donorId}`;
+        db.query(getPrevLastDonation, (err, rows, fields) => {
+            if(err) {
                 console.log(err);
                 return res.send(err);
             }
 
+            if(rows.length === 0) {
+                res.redirect(`/admin/${requirementId}/details`);
+                return;
+            }
+            let prevLastDonation = rows[0].donor_prev_last_donation;
+            prevLastDonation.setDate(prevLastDonation.getDate()+1);
+            prevLastDonation = prevLastDonation.toJSON().slice(0,10);
+            console.log(prevLastDonation);
+            console.log(prevLastDonation);
+
+            let updateLastDonationQuery = `UPDATE donor SET last_donation = '${prevLastDonation}' WHERE donor_id = ${donorId}`;
+            db.query(updateLastDonationQuery, (err, rows, fields) => {
+                if(err) {
+                    console.log(err);
+                    return res.send(err);
+                }
+                console.log('Last donation updated succesfully');
+            })
+
+            let deleteDonorQuery = `DELETE FROM donations WHERE requirement_id = ${requirementId} AND donor_id = ${donorId};`
+            db.query(deleteDonorQuery, (err, rows, fields) => {
+                if(err) {
+                    console.log(err);
+                    return res.send(err);
+                }
+                // console.log(rows);
+                res.redirect(`/admin/${requirementId}/details`);
+            })
+
+            let updateNoOfDonorsQuery = `UPDATE requirement SET donors_assigned = donors_assigned - 1 WHERE requirement_id = ${requirementId}`;
             db.query(updateNoOfDonorsQuery, (err, rows, fields) => {
                 if(err) {
                     console.log(err);
@@ -131,18 +215,8 @@ module.exports = {
                 console.log('No. of donors updated');
             })
 
-            db.query(updateLastDonationQuery, (err, rows, fields) => {
-                if(err) {
-                    console.log(err);
-                    return res.send(err);
-                }
-    
-                console.log('Last donation update successfully');
-            })
-
-            console.log('Donor assigned successfully');
-            res.redirect('/admin/' + requirementId + '/details');
         })
+        
     },
 
     closeRequirement : (req, res) => {

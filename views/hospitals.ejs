@@ -1,0 +1,19 @@
+<%- include('partials/header.ejs') -%>
+
+<body>
+    <%- include('partials/navbar.ejs') -%>
+    <table width="100%">
+        <tr>
+            <th>Hospital</th>
+            <th>Street Adress</th>
+            <th>Land Mark</th>
+            <th>Contact No.</th>
+        </tr>
+        <% hospitals.forEach(hospital => { %>
+            <td><%= hospital.name %></td>
+            <td><%= hospital.street_address %></td>
+            <td><%= hospital.landmark %></td>
+            <td><%= hospital.contact_no %></td>
+        <% }) %>
+    </table>
+</body>

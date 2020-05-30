@@ -26,5 +26,17 @@ module.exports = {
             console.log('Hospital added succesfully');
             res.redirect('/admin');
         })
+    },
+
+    getHospitalsPage : (req, res) => {
+
+        let getHospitalsQuery = `SELECT * FROM hospital`
+        db.query(getHospitalsQuery, (err, rows, fields) => {
+            console.log(rows);
+            res.render('hospitals.ejs', {
+                title : 'Hospitals',
+                hospitals : rows
+            })
+        })
     }
 }

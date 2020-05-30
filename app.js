@@ -6,10 +6,10 @@ const cors = require('cors');
 
 const { getHomePage } = require('./routes/index');
 const { getLoginPage, loginUser, addAdmin, getAdminHomePage, logout } = require('./routes/user');
-const { getAddDonorPage, addDonorDetails } = require('./routes/donor');
+const { getAddDonorPage, addDonorDetails, getDonorsPage } = require('./routes/donor');
 const { getAddRequirementPage, addRequirement, getAssignDonorPage, assignDonor, closeRequirement, getRequirementDetailsPage } = require('./routes/requirement');
-const { getClosedRequirementsPage }  = require('./routes/requirement');
-const { getAddHospitalPage, addHospital } = require('./routes/hospital');
+const { getClosedRequirementsPage, deleteDonor }  = require('./routes/requirement');
+const { getAddHospitalPage, addHospital, getHospitalsPage } = require('./routes/hospital');
 
 const { verifyAdmin } = require('./middlewares');
 
@@ -48,10 +48,14 @@ app.post('/admin/addrequirement', verifyAdmin, addRequirement);
 app.get('/admin/addhospital', verifyAdmin, getAddHospitalPage);
 app.post('/admin/addhospital', verifyAdmin, addHospital);
 
+app.get('/admin/donors', getDonorsPage);
+app.get('/admin/hospitals', getHospitalsPage);
+
 app.get('/admin/closederequirements', verifyAdmin, getClosedRequirementsPage);
 
-app.get('/admin/:requirementid/details', verifyAdmin, getRequirementDetailsPage);
+app.get('/admin/:requirementid/deletedonor/:donorid', deleteDonor);
 
+app.get('/admin/:requirementid/details', verifyAdmin, getRequirementDetailsPage);
 
 app.get('/admin/:requirementid/assigndonor', verifyAdmin, getAssignDonorPage);
 app.get('/admin/:requirementid/assigndonor/:donorid', verifyAdmin, assignDonor);

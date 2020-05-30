@@ -13,25 +13,21 @@
         Contact No : <%= requirement.contact_no %> <br>
         Date : <%= requirement.data %> <br><br>
         Donors : <br>
-        <ol>
+        <table width="100%">
+            <tr>
+                <th>Name</th>
+                <th>Year Of Admission</th>
+                <th>Department</th>
+                <th>Phone No.</th>
+            </tr>
             <% donors.forEach(donor => { %>
-                <li>
-                    <div>
-                        Name : <%= donor.name %> <br>
-                        Year of Admission : <%= donor.year_of_admission %> <br>
-                        Department : <%= donor.dept %> <br>
-                        Phone No : <%= donor.phone_no%> <br>
-                    </div>
-                </li>
-                <br>
+                <td><%= donor.name %></td>
+                <td><%= donor.year_of_admission %></td>
+                <td><%= donor.dept %></td>
+                <td><%= donor.phone_no%></td>
+                <td><a href="deletedonor/<%= donor.donor_id %>"><button>Delete</button></a></td>
             <% }) %>
-        </ol>
-    </div>
-    <% if(!requirement.closed) { %>
-        <div>
-            <a href="/admin/<%= requirement.requirement_id %>/assigndonor"><button> Assign Donor</button></a>
-            <a href="/admin/<%= requirement.requirement_id %>/close"><button>Close</button></a>
-        </div>
-    <% } %>
 
+        </table>
+    </div>
 </body>

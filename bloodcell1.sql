@@ -61,7 +61,27 @@ CREATE TABLE `donations` (
   CONSTRAINT `donation_requirement` FOREIGN KEY (`requirement_id`) REFERENCES `requirement` (`requirement_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-ALTER TABLE requirement ADD COLUMN donorsAssigned INT NULL DEFAULT 0 AFTER closed;
+ALTER TABLE requirement ADD COLUMN donors_assigned INT NULL DEFAULT 0 AFTER closed;
+
+update requirement set donors_assigned = 1 where requirement_id = 1;
+
+UPDATE requirement SET donors_assigned = 1 WHERE requirement_id = 1;
+
+select * from donor;
+
+select * from donations;
+
+select donor_prev_last_donationdonations from donations where requirement_id = 3 and donor_id = 1;
+SELECT donor_prev_last_donation FROM donations WHERE requirement_id = 3 AND donor_id = 1;
+
+
+ALTER TABLE `bloodcell`.`donations` 
+ADD COLUMN `donor_prev_last_donation` DATE NOT NULL AFTER `date_of_donation`;
+
+select * from donations;
+
+
+
 
 
 

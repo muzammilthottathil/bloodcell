@@ -1,0 +1,24 @@
+<%- include('partials/header.ejs') -%>
+<body>
+    <%- include('partials/navbar.ejs') -%>
+    <table width="100%">
+        <tr>
+            <th>Name</th>
+            <th>Year Of Admission</th>
+            <th>Department</th>
+            <th>Contact No.</th>
+            <th>Blood Group</th>
+            <th>Last Donation</th>
+        </tr>
+        <% donors.forEach(donor => { %>
+            <tr>
+                <td><%= donor.name %></td>
+                <td><%= donor.year_of_admission %></td>
+                <td><%= donor.dept %></td>
+                <td><%= donor.phone_no %></td>
+                <td><%= donor.blood_group %></td>
+                <td><%= donor.last_donation %></td>
+            </tr>  
+        <% }) %>
+    </table>
+</body>
