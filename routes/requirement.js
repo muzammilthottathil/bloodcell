@@ -248,6 +248,27 @@ module.exports = {
                 requirements : rows
             })
         })
+    },
+
+    getDonorCertificateModal : (req, res) => {
+
+        let requirementId = req.params.requirementid;
+        let getDonorsQuery = `SELECT name, year_of_admission, dept, donor.donor_id
+            FROM donations, donor
+            WHERE donations.requirement_id = ${requirementId} AND donations.donor_id = donor.donor_id;`;
+
+        db.query(getDonorsQuery, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+            console.log(rows);
+            res.render('donorCertificateModal.ejs', {
+                title : 'Donor Certificate',
+                donors : rows
+            })
+        })
+
     }
 
 }

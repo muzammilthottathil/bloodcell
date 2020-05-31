@@ -31,11 +31,25 @@
                         <td><%= requirement.quantity %></td>
                         <td><%= requirement.donors_assigned %></td>
                         <td><a href="/admin/<%= requirement.requirement_id %>/assigndonor"><button>Assign Donor</button></a></td>
-                        <td><a href="/admin/<%= requirement.requirement_id %>/close"><button>Close Requirement</button></a></td>
+                        <td>
+                            <a href="/admin/<%= requirement.requirement_id %>/close">
+                                <button>Close Requirement</button>
+                                
+                                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    Close Requirement
+                                </button> -->
+                            </a>
+                        </td>
                         <td><a href="/admin/<%= requirement.requirement_id %>/details"><button>Details</button></a></td>
                     </tr>
                 <% } %>               
             <% }) %>
         </table>                   
     </div>
+    <!-- Button trigger modal -->
+    
+  
+
+    <%- include('partials/footer.ejs') -%>
+
 </body>

@@ -8,7 +8,7 @@ const { getHomePage } = require('./routes/index');
 const { getLoginPage, loginUser, addAdmin, getAdminHomePage, logout } = require('./routes/user');
 const { getAddDonorPage, addDonorDetails, getDonorsPage, editDonorPage, editDonor } = require('./routes/donor');
 const { getAddRequirementPage, addRequirement, getAssignDonorPage, assignDonor, closeRequirement, getRequirementDetailsPage } = require('./routes/requirement');
-const { getClosedRequirementsPage, deleteDonor }  = require('./routes/requirement');
+const { getClosedRequirementsPage, deleteDonor, getDonorCertificateModal }  = require('./routes/requirement');
 const { getAddHospitalPage, addHospital, getHospitalsPage, editHospitalPage, editHospital } = require('./routes/hospital');
 
 const { verifyAdmin, verifyLogin } = require('./middlewares');
@@ -66,6 +66,7 @@ app.get('/admin/:requirementid/details', verifyAdmin, getRequirementDetailsPage)
 app.get('/admin/:requirementid/assigndonor', verifyAdmin, getAssignDonorPage);
 app.get('/admin/:requirementid/assigndonor/:donorid', verifyAdmin, assignDonor);
 
+app.get('/admin/:requirementid/donorcertificates', getDonorCertificateModal)
 app.get('/admin/:requirementid/close', verifyAdmin, closeRequirement);
 
 // app.post('/student/:username/adddetails', addDonorDetails);
