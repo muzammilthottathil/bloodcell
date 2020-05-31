@@ -56,10 +56,37 @@ module.exports = {
                 })
                 return;
             }
+            console.log(rows[0]);
             res.render('editHospital.ejs', {
                 title : 'Edit Hospital',
                 hospital : rows[0]
             })
         })
+    },
+
+    editHospital : (req, res) => {
+
+        // console.log(req.body);
+        let prevHospitalName = req.params.hospitalname;
+        let hospitalName = req.body.hospitalName;
+        let address = req.body.address;
+        let landmark = req.body.landmark;
+        let contactNo = req.body.contactNo;
+
+        let editHospitalQuery = `UPDATE hospital
+            SET name = ?, street_address = ?, landmark = ?, contact_no = ?
+            WHERE name = '${prevHospitalName}'`;
+        let values = [ hospitalName, address, landmark, contactNo ];
+
+        db.query(editHospitalQuery, values, (err, rows, fields) => {
+            if(err) {
+                console.log(err);
+                return res.send(err);
+            }
+
+            res.redirect('/admin/hospitals');
+        })
+
+
     }
 }

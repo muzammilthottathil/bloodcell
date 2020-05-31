@@ -9,7 +9,7 @@ const { getLoginPage, loginUser, addAdmin, getAdminHomePage, logout } = require(
 const { getAddDonorPage, addDonorDetails, getDonorsPage, editDonorPage, editDonor } = require('./routes/donor');
 const { getAddRequirementPage, addRequirement, getAssignDonorPage, assignDonor, closeRequirement, getRequirementDetailsPage } = require('./routes/requirement');
 const { getClosedRequirementsPage, deleteDonor }  = require('./routes/requirement');
-const { getAddHospitalPage, addHospital, getHospitalsPage, editHospitalPage } = require('./routes/hospital');
+const { getAddHospitalPage, addHospital, getHospitalsPage, editHospitalPage, editHospital } = require('./routes/hospital');
 
 const { verifyAdmin, verifyLogin } = require('./middlewares');
 
@@ -55,7 +55,7 @@ app.get('/admin/donors/:donorid/edit', editDonorPage);
 app.post('/admin/donors/:donorid/edit', editDonor);
 
 app.get('/admin/hospitals/:hospitalname/edit', editHospitalPage);
-// app.post('/admin/hospitals/:hospitalname/edit', editHospital);
+app.post('/admin/hospitals/:hospitalname/edit', editHospital);
 
 app.get('/admin/closederequirements', verifyAdmin, getClosedRequirementsPage);
 

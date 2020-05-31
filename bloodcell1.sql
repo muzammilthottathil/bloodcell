@@ -101,6 +101,35 @@ ALTER TABLE `bloodcell`.`donations`
 CHANGE COLUMN `donor_prev_last_donation` `donor_prev_last_donation` VARCHAR(45) NOT NULL ;
 
 
+select * from donor;
+
+
+
+
+
+
+
+
+
+
+
+ALTER TABLE `bloodcell`.`donor` 
+CHANGE COLUMN `last_donation` `last_donation` DATE NOT NULL ;
+
+
+ALTER TABLE `bloodcell`.`requirement` 
+DROP FOREIGN KEY `requirement_hospital`;
+ALTER TABLE `bloodcell`.`requirement` 
+ADD CONSTRAINT `requirement_hospital`
+  FOREIGN KEY (`hospital`)
+  REFERENCES `bloodcell`.`hospital` (`name`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+
+
+
 
 
 

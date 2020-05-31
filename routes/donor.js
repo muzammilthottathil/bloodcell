@@ -66,7 +66,7 @@ module.exports = {
                 console.log(err);
                 return res.send(err);
             }
-            console.log(rows[0]);
+            // console.log(rows[0]);
             res.render('editDonor.ejs', {
                 title : 'Edit Donor',
                 donor : rows[0]
@@ -77,7 +77,7 @@ module.exports = {
     editDonor : (req, res) => {
         
         let donorId = req.params.donorid;
-        console.log(req.params);
+        // console.log(req.params);
         let universityRegNo = req.body.universityRegNO;
         let name = req.body.name;
         let admissionYear = req.body.admissionYear;
