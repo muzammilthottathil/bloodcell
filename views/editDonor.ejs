@@ -69,7 +69,7 @@
             </div>
             <div>
                 <label for="lastDonation">Date of Last Donation : </label>
-                <input type="date" name="lastDonation" id="name" value="<%= donor.last_donation %>">
+                <input type="date" name="lastDonation" id="name" value="<%= donor.last_donation.toJSON().slice(0,10).replace(/-/g,'-') %>">
             </div>
             <div>
                 <button type="submit">Submit</button>
